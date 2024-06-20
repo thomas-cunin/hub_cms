@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}HUB CMS{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('appStyle') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+{#            {% block importmap %}{{ importmap('app') }}{% endblock %}#}
+        {% endblock %}
+    </head>
+    <body style="display: flex;">
+    <aside class="menu sidebar">
+        <p class="menu-label">Mon applciation</p>
+        <ul class="menu-list">
+            <li><a>Home page</a></li>
+            <li><a>Gestions des pages</a></li>
+{#            <li><a>Gestions des articles</a></li>#}
+        </ul>
+{#        <p class="menu-label">Paramètres</p>#}
+{#        <ul class="menu-list">#}
+{#            <li><a>Payments</a></li>#}
+{#            <li><a>Transfers</a></li>#}
+{#            <li><a>Balance</a></li>#}
+{#        </ul>#}
+    </aside>
+    <section class="section">
+    {% block body %}{% endblock %}
+    </section>
+    </body>
+</html>

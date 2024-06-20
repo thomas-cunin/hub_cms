@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pages de {{ currentApp.name }}{% endblock %}
+
+{% block body %}
+    <div class="columns">
+        <div class="column is-3">
+            <h1 class="title is-4">Pages de {{ currentApp.name }}</h1>
+            {% if currentApp.pages is empty %}
+                <p>Aucune page n'a été créée pour cette application.</p>
+            {% else %}
+                <ul>
+                    {% for page in currentApp.pages %}
+                        <li class="mb-3">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <figure class="image is-48x48 is-rounded is-centered">
+                                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_dYkkdCEqCFqmBwSW4frRCB0ctcrkak-i2w&s" alt="Placeholder image"/>
+                                            </figure>
+                                        </div>
+                                        <div class="media-content">
+                                            <p class="title is-6">{{ page.name }}</p>
+                                            <p class="subtitle is-7">Page de contenu</p>
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <span class="tag is-primary is-light">Infos pratiques</span>
+                                        <span class="tag is-primary is-light">Contact</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="column is-9">
+            <div class="container">
+                <h2 class="title is-4">Menu de navigation</h2>
+                <div class="menu custom-menu">
+                    {% for menu in pageMenus %}
+                        <div class="menu-item">
+                            <div class="menu-title">
+                                <span class="icon">
+                                    <i class="ri-list-check"></i>
+                                </span>
+                                <span>{{ menu.name }}</span>
+                                <span class="icon toggle-icon">
+                                    <i class="fas fa-chevron-down"></i>
+                                </span>
+                                <div class="options-button">
+                                    <span class="icon">
+                                        <i class="ri-more-fill"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="menu-content">
+                                {% for page in currentApp.pages %}
+                                    <div class="menu-item">
+                                        <div class="menu-title">
+                                            <span class="icon">
+                                                <i class="ri-file-text-line"></i>
+                                            </span>
+                                            <span>{{ page.name }}</span>
+                                            <div class="options-button">
+                                                <span class="icon">
+                                                    <i class="ri-more-fill"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="container mt-5">
+                <h2 class="title is-4">Autres pages & menus</h2>
+                <div class="menu custom-menu">
+                    {% for menu in pageMenus %}
+                        <div class="menu-item">
+                            <div class="menu-title">
+                                <span class="icon">
+                                    <i class="ri-list-check"></i>
+                                </span>
+                                <span>{{ menu.name }}</span>
+                                <span class="icon toggle-icon">
+                                    <i class="fas fa-chevron-down"></i>
+                                </span>
+                                <div class="options-button">
+                                    <span class="icon">
+                                        <i class="ri-more-fill"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="menu-content">
+                                {% for page in currentApp.pages %}
+                                    <div class="menu-item">
+                                        <div class="menu-title">
+                                            <span class="icon">
+                                                <i class="ri-file-text-line"></i>
+                                            </span>
+                                            <span>{{ page.name }}</span>
+                                            <div class="options-button">
+                                                <span class="icon">
+                                                    <i class="ri-more-fill"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const toggleIcons = document.querySelectorAll('.toggle-icon');
+
+    toggleIcons.forEach(icon => {
+    icon.addEventListener('click', () => {
+    const menuContent = icon.closest('.menu-item').querySelector('.menu-content');
+    if (menuContent.style.display === 'none') {
+    menuContent.style.display = 'block';
+    icon.innerHTML = '<i class="fas fa-chevron-up"></i>';
+    } else {
+    menuContent.style.display = 'none';
+    icon.innerHTML = '<i class="fas fa-chevron-down"></i>';
+    }
+    });
+    });
+    });
+    </script>
+{% endblock %}

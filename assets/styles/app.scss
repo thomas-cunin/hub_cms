@@ -1,0 +1,60 @@
+@use "../../node_modules/bulma/sass/index";
+// use remix icons
+@use "../../node_modules/remixicon/fonts/remixicon.css";
+.box{
+--bulma-box-shadowvar: 0 0 0 1px #6bc752;
+--bulma-box-color : #3f4960;
+--bulma-box-background-color : #ecf1f1;
+}
+.custom-menu{
+  .menu-item {
+    margin-bottom: 10px;
+
+  }
+  .menu-item .menu-title {
+    background-color: #ecf1f1;
+    color:#3f4960;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-radius: 8px;
+  }
+  .menu-item .menu-title .icon {
+    margin-right: 10px;
+    font-size: 24px;
+    color: #6bc752;
+    margin-left: 12px;
+  }
+  .menu-item  {
+    .menu-content{
+    margin-left: 20px;
+    padding-top: 10px;
+    transition: all 0.3s ease-in-out;
+  }
+  }
+  .menu-item .options-button {
+    margin-left: auto;
+  }
+  .menu-item .options-icon {
+    top: 20px;
+    font-size: 20px;
+    color: #6bc752;
+  }
+}
+.sidebar {
+  padding: 20px;
+  width: 240px;
+  // set border right to 1px solid with bulma's $border-color
+    border-right: 2px solid #6bc752;
+  // add inside shadow with bulma's $box-shadow
+    box-shadow: #8cd378;
+  height: 100vh;
+}
+.section {
+  width: calc(100% - 240px);
+}
+.custom-panel{
+  display: flex;
+    align-items: center;
+  flex-direction: row;
+}

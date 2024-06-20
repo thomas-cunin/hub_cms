@@ -1,0 +1,12 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+#admin_dashboard:
+#    path: /{appId}/admin
+#    controller: App\Controller\Admin\DashboardController::index
+#    requirements:
+#        appId: '\d+'  # ou une autre expression régulière correspondant à vos IDs d'application
+#    defaults:
+#        _admin: true

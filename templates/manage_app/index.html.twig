@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1>Manage App {{ currentApp.name }}</h1>
+<h2>Menus</h2>
+<ul>
+    {% for menu in currentApp.pageMenus %}
+        <li>
+            <h3>{{ menu.name }}</h3> <button class="edit-menu-btn" data-url="{{ path('manage_menu_edit', { 'appId':currentApp.uid,'menuUid': menu.uid }) }}">Edit</button>
+        </li>
+    {% endfor %}
+<button id="add-menu-btn" data-url="{{ path('manage_menu_add', { 'appId': currentApp.uid }) }}">Add Menu</button>
+
+<div id="form-container"></div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+    {{ encore_entry_script_tags('manageAppIndex') }}
+{% endblock %}
