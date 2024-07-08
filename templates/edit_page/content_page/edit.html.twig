@@ -1,0 +1,20 @@
+{# templates/content_page/edit.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Edit Content Page - {{ page.name }}</h1>
+
+    {{ form_start(form) }}
+    <div id="editor" class="content-editor"></div>
+    {{ form_row(form.content) }}
+    <button class="btn">Update</button>
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('initContentPageEditor') }}
+
+{% endblock %}

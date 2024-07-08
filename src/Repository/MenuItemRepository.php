@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\MenuPage;
+use App\Entity\MenuItem;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<MenuPage>
+ * @extends ServiceEntityRepository<MenuItem>
  */
-class MenuPageRepository extends ServiceEntityRepository
+class MenuItemRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, MenuPage::class);
+        parent::__construct($registry, MenuItem::class);
     }
 
 //    /**
-//     * @return MenuPage[] Returns an array of MenuPage objects
+//     * @return MenuItem[] Returns an array of MenuItem objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -31,7 +31,7 @@ class MenuPageRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?MenuPage
+//    public function findOneBySomeField($value): ?MenuItem
 //    {
 //        return $this->createQueryBuilder('m')
 //            ->andWhere('m.exampleField = :val')

@@ -1,6 +1,7 @@
 @use "../../node_modules/bulma/sass/index";
 // use remix icons
 @use "../../node_modules/remixicon/fonts/remixicon.css";
+@use "editor/editor.scss";
 .box{
 --bulma-box-shadowvar: 0 0 0 1px #6bc752;
 --bulma-box-color : #3f4960;
@@ -9,7 +10,6 @@
 .custom-menu{
   .menu-item {
     margin-bottom: 10px;
-
   }
   .menu-item .menu-title {
     background-color: #ecf1f1;
@@ -28,8 +28,16 @@
   .menu-item  {
     .menu-content{
     margin-left: 20px;
-    padding-top: 10px;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.1s ease-in-out;
+      height: 0;
+        max-height: 0;
+        overflow: hidden;
+      &.open {
+        padding-top: 10px;
+        height: auto;
+        max-height: none;
+        overflow: visible;
+      }
   }
   }
   .menu-item .options-button {

@@ -17,6 +17,8 @@ menus.forEach(menu => {
 
 } );
 
+
+
 document.getElementById('add-menu-btn').addEventListener('click', function() {
     const url = this.getAttribute('data-url');
     console.log(url);

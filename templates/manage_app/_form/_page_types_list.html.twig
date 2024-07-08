@@ -1,0 +1,49 @@
+{#return with bulma and remix icon a list of all pages type : Page d eocntenu, Sous-menu, Page d'évenements, Page de contact, Page de blog#}
+
+{% set pages = [
+    {
+        "title": "Page de contenu",
+        "icon": "ri-file-text-line",
+        "type": "contentPage",
+    },
+    {
+        "title": "Sous-menu",
+        "icon": "ri-menu-line",
+        "type": "menu",
+    },
+    {
+        "title": "Page d'événements",
+        "icon": "ri-calendar-event-line",
+        "type": "events",
+    },
+    {
+        "title": "Page de contact",
+        "icon": "ri-mail-line",
+        "type": "contact",
+    },
+    {
+        "title": "Page de blog",
+        "icon": "ri-article-line",
+        "type": "blog",
+    },
+] %}
+
+<div class="columns is-multiline" >
+    {% for page in pages %}
+        <div class="column is-4">
+            <div class="box" data-add-page-type-url="{{ path('menu_pages_types_add',{appId:currentApp.uid,menuUid:currentMenu.uid,type:page.type}) }}">
+                <div class="media">
+                    <div class="media-left is-flex is-align-items-center">
+                        <span class="icon is-large has-text-primary">
+                            <i class="{{ page.icon }}"></i>
+                        </span>
+                    </div>
+                    <div class="media-content">
+                        <p class="title is-5">{{ page.title }}</p>
+                        <p class="subtitle is-6">{{ page.type }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

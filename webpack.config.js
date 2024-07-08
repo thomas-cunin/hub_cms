@@ -1,5 +1,5 @@
 const Encore = require('@symfony/webpack-encore');
-
+const sveltePreprocess = require('svelte-preprocess');
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
 if (!Encore.isRuntimeEnvironmentConfigured()) {
@@ -22,6 +22,7 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('manageAppIndex', './assets/manageAppIndex.js')
+    .addEntry('initContentPageEditor', './assets/initContentPageEditor.js')
     .addStyleEntry('appStyle', './assets/styles/app.scss')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
@@ -59,10 +60,21 @@ Encore
     .enableSassLoader()
 
     // uncomment if you use TypeScript
-    //.enableTypeScriptLoader()
+    .enableTypeScriptLoader()
+
+    // enable Svelte
+    .addRule({
+        test: /\.svelte$/,
+        use: {
+            loader: 'svelte-loader',
+            options: {
+                preprocess: sveltePreprocess(),
+            },
+        },
+    })
 
     // uncomment if you use React
-    //.enableReactPreset()
+    // .enableReactPreset()
 
     // uncomment to get integrity="..." attributes on your script & link tags
     // requires WebpackEncoreBundle 1.4 or higher

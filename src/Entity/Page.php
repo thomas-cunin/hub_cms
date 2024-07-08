@@ -8,8 +8,15 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PageRepository::class)]
+#[ORM\Table(name: 'page')]
+#[ORM\InheritanceType('JOINED')]
+#[ORM\DiscriminatorColumn(name: 'type', type: 'string')]
+#[ORM\DiscriminatorMap(['content' => 'ContentPage'])]
 class Page
 {
+
+    const TYPE_CONTENT = 'content';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -21,19 +28,18 @@ class Page
     #[ORM\Column]
     private ?bool $isHidden = null;
 
-    /**
-     * @var Collection<int, MenuPage>
-     */
-    #[ORM\OneToMany(targetEntity: MenuPage::class, mappedBy: 'page', orphanRemoval: true)]
-    private Collection $menuPages;
-
     #[ORM\ManyToOne(inversedBy: 'pages')]
     #[ORM\JoinColumn(nullable: false)]
     private ?App $app = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $uid = null;
+
+    private ?string $type = null;
+
     public function __construct()
     {
-        $this->menuPages = new ArrayCollection();
+
     }
 
 
@@ -66,36 +72,6 @@ class Page
         return $this;
     }
 
-    /**
-     * @return Collection<int, MenuPage>
-     */
-    public function getMenuPages(): Collection
-    {
-        return $this->menuPages;
-    }
-
-    public function addMenuPage(MenuPage $menuPage): static
-    {
-        if (!$this->menuPages->contains($menuPage)) {
-            $this->menuPages->add($menuPage);
-            $menuPage->setPage($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMenuPage(MenuPage $menuPage): static
-    {
-        if ($this->menuPages->removeElement($menuPage)) {
-            // set the owning side to null (unless already changed)
-            if ($menuPage->getPage() === $this) {
-                $menuPage->setPage(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getApp(): ?App
     {
         return $this->app;
@@ -104,6 +80,30 @@ class Page
     public function setApp(?App $app): static
     {
         $this->app = $app;
+
+        return $this;
+    }
+
+    public function getUid(): ?string
+    {
+        return $this->uid;
+    }
+
+    public function setUid(string $uid): static
+    {
+        $this->uid = $uid;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

@@ -20,6 +20,11 @@
         <ul class="menu-list">
             <li><a>Home page</a></li>
             <li><a>Gestions des pages</a></li>
+{% if currentApp is defined %}
+            {% for lang in ['fr', 'en'] %}
+                <li><a href="{{ path('change_locale_lang', {'appId': currentApp.uid, 'lang': lang}) }}">{{ lang }}</a></li>
+            {% endfor %}
+{% endif %}
 {#            <li><a>Gestions des articles</a></li>#}
         </ul>
 {#        <p class="menu-label">Paramètres</p>#}

@@ -4,4 +4,12 @@ framework:
         default_path: '%kernel.project_dir%/translations'
         fallbacks:
             - en
-        providers:
+            - fr
+    session:
+        enabled: true
+
+# App\LocaleListener configuration
+services:
+    App\EventListener\LocaleListener:
+        tags:
+            - { name: kernel.event_subscriber }

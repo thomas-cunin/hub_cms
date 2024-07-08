@@ -1,143 +1,119 @@
 {% extends 'base.html.twig' %}
+{% import "manage_app/macro/menu_item.html.twig" as menuItemMacro %}
 
 {% block title %}Pages de {{ currentApp.name }}{% endblock %}
 
 {% block body %}
     <div class="columns">
         <div class="column is-3">
-            <h1 class="title is-4">Pages de {{ currentApp.name }}</h1>
+            <h1 class="title is-4">{{ 'welcome'|trans }} {{ currentApp.name }}</h1>
             {% if currentApp.pages is empty %}
                 <p>Aucune page n'a été créée pour cette application.</p>
-            {% else %}
-                <ul>
-                    {% for page in currentApp.pages %}
-                        <li class="mb-3">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <figure class="image is-48x48 is-rounded is-centered">
-                                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_dYkkdCEqCFqmBwSW4frRCB0ctcrkak-i2w&s" alt="Placeholder image"/>
-                                            </figure>
-                                        </div>
-                                        <div class="media-content">
-                                            <p class="title is-6">{{ page.name }}</p>
-                                            <p class="subtitle is-7">Page de contenu</p>
-                                        </div>
-                                    </div>
-                                    <div class="content">
-                                        <span class="tag is-primary is-light">Infos pratiques</span>
-                                        <span class="tag is-primary is-light">Contact</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    {% endfor %}
-                </ul>
             {% endif %}
         </div>
         <div class="column is-9">
             <div class="container">
                 <h2 class="title is-4">Menu de navigation</h2>
                 <div class="menu custom-menu">
-                    {% for menu in pageMenus %}
-                        <div class="menu-item">
-                            <div class="menu-title">
-                                <span class="icon">
-                                    <i class="ri-list-check"></i>
-                                </span>
-                                <span>{{ menu.name }}</span>
-                                <span class="icon toggle-icon">
-                                    <i class="fas fa-chevron-down"></i>
-                                </span>
-                                <div class="options-button">
-                                    <span class="icon">
-                                        <i class="ri-more-fill"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="menu-content">
-                                {% for page in currentApp.pages %}
-                                    <div class="menu-item">
-                                        <div class="menu-title">
-                                            <span class="icon">
-                                                <i class="ri-file-text-line"></i>
-                                            </span>
-                                            <span>{{ page.name }}</span>
-                                            <div class="options-button">
-                                                <span class="icon">
-                                                    <i class="ri-more-fill"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endfor %}
+                    {{ menuItemMacro.renderMenu(mainMenu) }}
                 </div>
             </div>
             <div class="container mt-5">
                 <h2 class="title is-4">Autres pages & menus</h2>
                 <div class="menu custom-menu">
-                    {% for menu in pageMenus %}
-                        <div class="menu-item">
-                            <div class="menu-title">
-                                <span class="icon">
-                                    <i class="ri-list-check"></i>
-                                </span>
-                                <span>{{ menu.name }}</span>
-                                <span class="icon toggle-icon">
-                                    <i class="fas fa-chevron-down"></i>
-                                </span>
-                                <div class="options-button">
-                                    <span class="icon">
-                                        <i class="ri-more-fill"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="menu-content">
-                                {% for page in currentApp.pages %}
-                                    <div class="menu-item">
-                                        <div class="menu-title">
-                                            <span class="icon">
-                                                <i class="ri-file-text-line"></i>
-                                            </span>
-                                            <span>{{ page.name }}</span>
-                                            <div class="options-button">
-                                                <span class="icon">
-                                                    <i class="ri-more-fill"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endfor %}
+                    {{ menuItemMacro.renderMenu(unassignedPagesMenu) }}
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal for adding a page -->
+    <div class="modal" id="addPageModal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Sélectionner un type de page</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <!-- Content will be loaded via AJAX -->
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success">Ajouter</button>
+                <button class="button" aria-label="close">Annuler</button>
+            </footer>
         </div>
     </div>
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-    const toggleIcons = document.querySelectorAll('.toggle-icon');
+        document.addEventListener('DOMContentLoaded', () => {
+            const addPageButtons = document.querySelectorAll('.add-page[data-action="add-page"]');
+            const addPageModal = document.getElementById('addPageModal');
 
-    toggleIcons.forEach(icon => {
-    icon.addEventListener('click', () => {
-    const menuContent = icon.closest('.menu-item').querySelector('.menu-content');
-    if (menuContent.style.display === 'none') {
-    menuContent.style.display = 'block';
-    icon.innerHTML = '<i class="fas fa-chevron-up"></i>';
-    } else {
-    menuContent.style.display = 'none';
-    icon.innerHTML = '<i class="fas fa-chevron-down"></i>';
-    }
-    });
-    });
-    });
+            addPageButtons.forEach((addPageButton)=>{
+                addPageButton.addEventListener('click', (e) => {
+                    const url = addPageButton.closest('[data-action-url]').getAttribute('data-action-url');
+
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            document.querySelector('#addPageModal .modal-card-body').innerHTML = data.list;
+                            addPageModal.classList.add('is-active');
+                            // add event for all page types (by queryselectorall [data-add-page-type-url], when click on a page type, we get the closest [data-add-page-type-url] and send request
+                            document.querySelectorAll('[data-add-page-type-url]').forEach((el) => {
+                                el.addEventListener('click', (e) => {
+                                    const url = el.closest('[data-add-page-type-url]').getAttribute('data-add-page-type-url');
+                                    fetch(url)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            addPageModal.classList.remove('is-active');
+                                            window.location.reload();
+                                        })
+                                        .catch(error => {
+                                            console.error('Error adding page:', error);
+                                        });
+                                });
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error fetching page types:', error);
+                        });
+                });
+            })
+
+            // Close modal event listeners
+            document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button').forEach(el => {
+                el.addEventListener('click', () => {
+                    addPageModal.classList.remove('is-active');
+                });
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Sélectionne toutes les icônes de bascule
+            const toggleIcons = document.querySelectorAll(".toggle-icon");
+
+            toggleIcons.forEach(icon => {
+                icon.addEventListener("click", function() {
+                    // Trouve le contenu du menu associé
+                    const menuItem = icon.closest(".menu-item");
+                    const menuContent = menuItem.querySelector(".menu-content");
+
+                    // Ouvre ou ferme le menu
+                    if (menuContent.classList.contains("open")) {
+                        menuContent.classList.remove("open");
+                        icon.querySelector("i").classList.replace("fa-chevron-up", "fa-chevron-down");
+                    } else {
+                        menuContent.classList.add("open");
+                        icon.querySelector("i").classList.replace("fa-chevron-down", "fa-chevron-up");
+                    }
+                });
+            });
+        });
+
     </script>
 {% endblock %}
+

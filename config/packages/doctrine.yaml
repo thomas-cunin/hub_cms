@@ -22,6 +22,16 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+            sortable:
+                type: attribute # ou annotation ou xml
+                alias: Gedmo
+                prefix: Gedmo\Sortable\Entity
+                dir: '%kernel.project_dir%/vendor/gedmo/doctrine-extensions/src/Sortable/Entity'
+#            uploadable:
+#                type: attribute # ou annotation ou xml
+#                alias: Gedmo
+#                prefix: Gedmo\Uploadable\Entity
+#                dir: '%kernel.project_dir%/vendor/gedmo/doctrine-extensions/src/Uploadable/Entity'
         controller_resolver:
             auto_mapping: false
 

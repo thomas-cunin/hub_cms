@@ -17,8 +17,8 @@ class App
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->userAppRelations = new ArrayCollection();
-        $this->pageMenus = new ArrayCollection();
         $this->pages = new ArrayCollection();
+        $this->menus = new ArrayCollection();
     }
 
     #[ORM\Id]
@@ -51,16 +51,16 @@ class App
     private Collection $userAppRelations;
 
     /**
-     * @var Collection<int, PageMenu>
-     */
-    #[ORM\OneToMany(targetEntity: PageMenu::class, mappedBy: 'app')]
-    private Collection $pageMenus;
-
-    /**
      * @var Collection<int, Page>
      */
     #[ORM\OneToMany(targetEntity: Page::class, mappedBy: 'app', orphanRemoval: true)]
     private Collection $pages;
+
+    /**
+     * @var Collection<int, Menu>
+     */
+    #[ORM\OneToMany(targetEntity: Menu::class, mappedBy: 'app', orphanRemoval: true)]
+    private Collection $menus;
 
     public function getId(): ?int
     {
@@ -146,36 +146,6 @@ class App
     }
 
     /**
-     * @return Collection<int, PageMenu>
-     */
-    public function getPageMenus(): Collection
-    {
-        return $this->pageMenus;
-    }
-
-    public function addPageMenu(PageMenu $pageMenu): static
-    {
-        if (!$this->pageMenus->contains($pageMenu)) {
-            $this->pageMenus->add($pageMenu);
-            $pageMenu->setApp($this);
-        }
-
-        return $this;
-    }
-
-    public function removePageMenu(PageMenu $pageMenu): static
-    {
-        if ($this->pageMenus->removeElement($pageMenu)) {
-            // set the owning side to null (unless already changed)
-            if ($pageMenu->getApp() === $this) {
-                $pageMenu->setApp(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Page>
      */
     public function getPages(): Collection
@@ -199,6 +169,59 @@ class App
             // set the owning side to null (unless already changed)
             if ($page->getApp() === $this) {
                 $page->setApp(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUnassignedPagesMenu(): ?Menu
+    {
+        // return the first menu that is of type unassigned
+        foreach ($this->menus as $menu) {
+            if ($menu->getType() === 'unassigned') {
+                return $menu;
+            }
+        }
+
+        return null;
+    }
+    public function getMainMenu(): ?Menu
+    {
+        // return the first menu that is of type main
+        foreach ($this->menus as $menu) {
+            if ($menu->getType() === 'main') {
+                return $menu;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @return Collection<int, Menu>
+     */
+    public function getMenus(): Collection
+    {
+        return $this->menus;
+    }
+
+    public function addMenu(Menu $menu): static
+    {
+        if (!$this->menus->contains($menu)) {
+            $this->menus->add($menu);
+            $menu->setApp($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMenu(Menu $menu): static
+    {
+        if ($this->menus->removeElement($menu)) {
+            // set the owning side to null (unless already changed)
+            if ($menu->getApp() === $this) {
+                $menu->setApp(null);
             }
         }
 

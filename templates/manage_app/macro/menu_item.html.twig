@@ -1,0 +1,86 @@
+{% macro renderMenu(menu) %}
+    {% if menu is same as(null) %}
+        <div class="error text-center">
+            <span class="icon">
+                <i class="ri-error-warning-line"></i>
+            </span>
+            <span>Menu introuvable</span>
+        </div>
+        {% else %}
+            <div class="menu-item" data-id="{{ menu.uid }}">
+                <div class="menu-title">
+            <span class="icon">
+                <i class="ri-list-check"></i>
+            </span>
+                    <span>{{ menu.name }}</span>
+                    <span class="icon toggle-icon">
+                <i class="fas fa-chevron-down"></i>
+            </span>
+                    <div class="options-button">
+                        <div class="dropdown is-right">
+                            <div class="dropdown-trigger">
+                                <button class="" aria-haspopup="true" aria-controls="dropdown-menu">
+                            <span class="icon">
+                                <i class="ri-more-fill"></i>
+                            </span>
+                                </button>
+                            </div>
+                            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                <div class="dropdown-content">
+                                    <a href="#" class="dropdown-item">Action 1</a>
+                                    <a href="#" class="dropdown-item">Action 2</a>
+                                    <a href="#" class="dropdown-item">Action 3</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+{#                {% if menu.menuItems|length > 0 %}#}
+                    <div class="menu-content">
+                        {% for menuItem in menu.menuItems %}
+                            {% if menuItem.submenu is not same as(null) %}
+                                {{ _self.renderMenu(menuItem.submenu) }}
+                            {% else %}
+                                <div class="menu-item" data-id="{{ menuItem.page.uid }}">
+                                    <div class="menu-title">
+                                <span class="icon">
+                                    <i class="ri-file-text-line"></i>
+                                </span>
+                                        <span>{{ menuItem.page.name }}</span>
+                                        <div class="options-button">
+                                            <div class="dropdown is-right">
+                                                <div class="dropdown-trigger">
+                                                    <button class="" aria-haspopup="true" aria-controls="dropdown-menu">
+                            <span class="icon">
+                                <i class="ri-more-fill"></i>
+                            </span>
+                                                    </button>
+                                                </div>
+                                                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <a href="{{ path('edit_page',{appId:menuItem.page.app.uid,pageUid:menuItem.page.uid}) }}" class="dropdown-item">Action 1</a>
+                                                        <a href="#" class="dropdown-item">Action 2</a>
+                                                        <a href="#" class="dropdown-item">Action 3</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <div class="menu-item add-page" data-action="add-page" data-action-url="{{ path('menu_pages_types_list', {'appId': menu.app.uid,'menuUid':menu.uid}) }}">
+                            <div class="menu-title">
+            <span class="icon">
+                <i class="ri-add-line"></i>
+            </span>
+                                <span>Ajouter une section</span>
+                            </div>
+                        </div>
+                    </div>
+{#                {% endif %}#}
+            </div>
+
+    {% endif %}
+
+{% endmacro %}

@@ -30,11 +30,16 @@ services:
 #            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 #        arguments:
 #            $logger: '@monolog.logger'
-    App\Router\CustomRouter:
-        decorates: 'router'
-        arguments: ['@App\Router\CustomRouter.inner']
+#    App\Router\CustomRouter:
+#        decorates: 'router'
+#        arguments: ['@App\Router\CustomRouter.inner']
     App\Utils\FormConstraintHelper:
         arguments:
             $metadataFactory: '@validator.mapping.class_metadata_factory'
+    App\EventListener\LocaleListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, priority: 20 }
+        arguments:
+            Psr\Log\LoggerInterface: '@monolog.logger'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
