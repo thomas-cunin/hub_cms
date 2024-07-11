@@ -4,14 +4,6 @@
 {% block title %}Pages de {{ currentApp.name }}{% endblock %}
 
 {% block body %}
-    <div class="columns">
-        <div class="column is-3">
-            <h1 class="title is-4">{{ 'welcome'|trans }} {{ currentApp.name }}</h1>
-            {% if currentApp.pages is empty %}
-                <p>Aucune page n'a été créée pour cette application.</p>
-            {% endif %}
-        </div>
-        <div class="column is-9">
             <div class="container">
                 <h2 class="title is-4">Menu de navigation</h2>
                 <div class="menu custom-menu">
@@ -24,8 +16,6 @@
                     {{ menuItemMacro.renderMenu(unassignedPagesMenu) }}
                 </div>
             </div>
-        </div>
-    </div>
 
     <!-- Modal for adding a page -->
     <div class="modal" id="addPageModal">

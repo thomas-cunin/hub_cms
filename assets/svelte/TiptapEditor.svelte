@@ -1,6 +1,7 @@
 <script>
     import {onMount} from 'svelte';
     import {Editor} from '@tiptap/core';
+    import ToolbarButton from "./components/toolbar/ToolbarButton.svelte";
     import StarterKit from '@tiptap/starter-kit';
     import Image from '@tiptap/extension-image';
     import BubbleMenu from '@tiptap/extension-bubble-menu';
@@ -178,24 +179,21 @@
 
 <div>
     <div class="toolbar">
-        <button type="button" class:active={$isBold} on:click={toggleBold}><strong>B</strong></button>
-        <button type="button" class:active={$isItalic} on:click={toggleItalic}><em>I</em></button>
-        <button type="button" class:active={$isStrike} on:click={toggleStrike}><s>S</s></button>
-        <button type="button" class:active={$isHeading1} on:click={() => insertHeading(1)}>H1</button>
-        <button type="button" class:active={$isHeading2} on:click={() => insertHeading(2)}>H2</button>
-        <button type="button" class:active={$isHeading3} on:click={() => insertHeading(3)}>H3</button>
-        <button type="button" class:active={$isParagraph} on:click={setParagraph}>P</button>
-        <button type="button" class:active={$isBulletList} on:click={insertBulletList}>UL</button>
-        <button type="button" class:active={$isOrderedList} on:click={insertOrderedList}>OL</button>
-        <button type="button" on:click={insertImage}>IMG</button>
-        <button type="button" on:click={insertHorizontalRule}>HR</button>
-        <button type="button" class:active={$isBlockquote} on:click={insertBlockquote}>BLOCKQUOTE</button>
-        <button type="button" class:active={$isTextAlignLeft} on:click={toggleTextAlignLeft}><i
-                class="ri-align-left"></i></button>
-        <button type="button" class:active={$isTextAlignCenter} on:click={toggleTextAlignCenter}><i
-                class="ri-align-center"></i></button>
-        <button type="button" class:active={$isTextAlignRight} on:click={toggleTextAlignRight}><i
-                class="ri-align-right"></i></button>
+        <ToolbarButton active={$isBold} onClick={toggleBold} label="B" />
+        <ToolbarButton active={$isItalic} onClick={toggleItalic} label="I" />
+        <ToolbarButton active={$isStrike} onClick={toggleStrike} label="S" />
+        <ToolbarButton active={$isHeading1} onClick={() => insertHeading(1)} label="H1" />
+        <ToolbarButton active={$isHeading2} onClick={() => insertHeading(2)} label="H2" />
+        <ToolbarButton active={$isHeading3} onClick={() => insertHeading(3)} label="H3" />
+        <ToolbarButton active={$isParagraph} onClick={setParagraph} label="P" />
+        <ToolbarButton active={$isBulletList} onClick={insertBulletList} label="UL" />
+        <ToolbarButton active={$isOrderedList} onClick={insertOrderedList} label="OL" />
+        <ToolbarButton onClick={insertImage} label="IMG" />
+        <ToolbarButton onClick={insertHorizontalRule} label="HR" />
+        <ToolbarButton active={$isBlockquote} onClick={insertBlockquote} label="BLOCKQUOTE" />
+        <ToolbarButton active={$isTextAlignLeft} onClick={toggleTextAlignLeft} icon="ri-align-left" />
+        <ToolbarButton active={$isTextAlignCenter} onClick={toggleTextAlignCenter} icon="ri-align-center" />
+        <ToolbarButton active={$isTextAlignRight} onClick={toggleTextAlignRight} icon="ri-align-right" />
         <input type="color" value={$currentColor} on:change={setColor}/>
     </div>
     <div bind:this={editorContainer} class="editor"></div>
