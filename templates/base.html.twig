@@ -19,9 +19,9 @@
 </head>
 <body style="display: flex;">
 <aside class="menu sidebar">
-    <p class="menu-label">Mon applciation</p>
+    <p class="menu-label">{{ 'menu.my_app' | trans }}</p>
     <ul class="menu-list">
-        <li class=""><a class="has-text-warning" href="{{ path('manage_app_pages',{'appSlug':currentApp.slug}) }}">Arborescence</a></li>
+        <li class=""><a class="has-text-warning" href="{{ path('manage_app_pages',{'appSlug':currentApp.slug}) }}">{{ 'menu.app_tree' | trans }}</a></li>
 
         {#            <li><a>Gestions des articles</a></li> #}
     </ul>

@@ -1,2 +1,5 @@
 welcome: 'Bienvenue'
 goodbye: 'Au revoir'
+menu:
+  my_app: 'Mon application'
+  app_tree: 'Arborescence'
