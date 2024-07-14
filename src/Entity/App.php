@@ -62,6 +62,12 @@ class App
     #[ORM\OneToMany(targetEntity: Menu::class, mappedBy: 'app', orphanRemoval: true)]
     private Collection $menus;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $domain = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -224,6 +230,30 @@ class App
                 $menu->setApp(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getDomain(): ?string
+    {
+        return $this->domain;
+    }
+
+    public function setDomain(?string $domain): static
+    {
+        $this->domain = $domain;
 
         return $this;
     }

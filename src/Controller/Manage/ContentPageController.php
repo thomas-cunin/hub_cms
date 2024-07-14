@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/{appId}')]
+
 class ContentPageController extends AbstractController
 {
 
@@ -23,7 +23,6 @@ class ContentPageController extends AbstractController
     #[Route('/page/{pageUid}/edit', name: 'edit_page')]
     public function index(
         Request $request,
-        #[MapEntity(mapping: ['appId' => 'uid'])]
         App $app,
         #[MapEntity(mapping: ['pageUid' => 'uid'])]
         ContentPage $page

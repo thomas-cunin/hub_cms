@@ -17,8 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-
-#[Route('/{appId}')]
 class PageMenuController extends AbstractController
 {
 
@@ -26,9 +24,20 @@ class PageMenuController extends AbstractController
     {
     }
 
+    #[Route('/test', name: 'test')]
+    public function test(
+        App $app
+    ): Response
+    {
+        $route = $this->generateUrl('test',[],0);
+
+        dd($app, $route);
+        return $this->json([
+            'domain' => '$domain',
+        ]);
+    }
     #[Route('/myapp', name: 'manage_app_index')]
     public function index(
-        #[MapEntity(mapping: ['appId' => 'uid'])]
         App $app
     ): Response
     {
@@ -39,7 +48,6 @@ class PageMenuController extends AbstractController
 
     #[Route('/pages', name: 'manage_app_pages')]
     public function pages(
-        #[MapEntity(mapping: ['appId' => 'uid'])]
         App $app
     ): Response
     {
@@ -74,7 +82,6 @@ class PageMenuController extends AbstractController
     #[Route('/menu/add', name: 'manage_menu_add', condition: 'request.isXmlHttpRequest()')]
     #[Route('/menu/edit/{menuUid}', name: 'manage_menu_edit', condition: 'request.isXmlHttpRequest()')]
     public function getMenuForm(
-        #[MapEntity(mapping: ['appId' => 'uid'])]
         App      $app,
         Request  $request,
         #[MapEntity(mapping: ['menuUid' => 'uid'])]
@@ -121,7 +128,6 @@ class PageMenuController extends AbstractController
 
     #[Route('/menu/{menuUid}/pages/types/list', name: 'menu_pages_types_list')]
     public function pageTypesList(
-        #[MapEntity(mapping: ['appId' => 'uid'])]
         App $app,
         #[MapEntity(mapping: ['menuUid' => 'uid'])]
         Menu $menu
@@ -137,7 +143,6 @@ class PageMenuController extends AbstractController
 
     #[Route('/menu/{menuUid}/pages/add', name: 'menu_pages_types_add')]
     public function pageTypesAdd(
-        #[MapEntity(mapping: ['appId' => 'uid'])]
         App $app,
         #[MapEntity(mapping: ['menuUid' => 'uid'])]
         Menu $menu,
@@ -190,7 +195,6 @@ class PageMenuController extends AbstractController
 
     #[Route('/change-locale-lang', name: 'change_locale_lang')]
     public function changeLocaleLang(Request $request,
-    #[MapEntity(mapping: ['appId' => 'uid'])]
     App $app
     ): Response
     {

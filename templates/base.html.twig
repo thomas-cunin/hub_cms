@@ -21,7 +21,7 @@
 <aside class="menu sidebar">
     <p class="menu-label">Mon applciation</p>
     <ul class="menu-list">
-        <li class=""><a class="has-text-warning" href="{{ path('manage_app_pages',{appId:currentApp.uid}) }}">Arborescence</a></li>
+        <li class=""><a class="has-text-warning" href="{{ path('manage_app_pages',{'appSlug':currentApp.slug}) }}">Arborescence</a></li>
 
         {#            <li><a>Gestions des articles</a></li> #}
     </ul>
@@ -56,7 +56,7 @@
     <ul class="menu-list">
         {% if currentApp is defined %}
             {% for lang in ['fr', 'en'] %}
-                <li><a href="{{ path('change_locale_lang', {'appId': currentApp.uid, 'lang': lang}) }}">{{ lang }}</a>
+                <li><a href="{{ path('change_locale_lang', {'appSlug':currentApp.slug, 'lang': lang}) }}">{{ lang }}</a>
                 </li>
             {% endfor %}
         {% endif %}

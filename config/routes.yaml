@@ -3,6 +3,12 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+manage_routes:
+    resource: ../src/Controller/Manage/
+    type: attribute
+    prefix: /{_locale}/manage
+    requirements:
+        _locale: '%app_locales%'
 #admin_dashboard:
 #    path: /{appId}/admin
 #    controller: App\Controller\Admin\DashboardController::index
